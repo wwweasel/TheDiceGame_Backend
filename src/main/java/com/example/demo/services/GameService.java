@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.example.demo.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,12 +64,6 @@ public class GameService {
 				.map(game -> convertToDTO(game))
 				.collect(Collectors.toList());
 	}
-	
-	//-----
-	
-//	public List<GameDTO> getGamesAndSuccessRate() {
-//		List<GameDTO> 
-//	}
 	
 	//----
 	

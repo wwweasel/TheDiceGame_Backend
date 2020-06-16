@@ -4,45 +4,41 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name="player")
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Player {
+
+	// Fields
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Game> games = new ArrayList<Game>();
 	
-	@Column(name = "registrationDateTime", columnDefinition = "TIMESTAMP")
+	@Column(name = "registration_date_time", columnDefinition = "TIMESTAMP")
 	private LocalDateTime registrationDateTime;
 	
-	
+	// Constructors
 	public Player() {}
 	
-	// 
+	// abstract methods
 	public abstract String getName();
-	
+	public abstract void setName(String name);
+
+	// special methods
 	@PrePersist
 	public void prePersist(){
 		this.registrationDateTime = LocalDateTime.now();
 	}
-	
+
+	// getters and setters
 	public LocalDateTime getRegistrationDateTime() {
 		return registrationDateTime;
 	}
@@ -53,16 +49,13 @@ public abstract class Player {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public Integer getId() {
 		return id;
 	}
 	
-	
 	public List<Game> getGames() {
 		return this.games;
 	}
-	
 	
 	@Override
 	public int hashCode() {

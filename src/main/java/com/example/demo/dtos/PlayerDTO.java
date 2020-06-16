@@ -1,19 +1,23 @@
 package com.example.demo.dtos;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.example.demo.entities.Game;
+import com.example.demo.tools.View;
+import com.fasterxml.jackson.annotation.JsonView;
 
 public class PlayerDTO {
-	
+
+	@JsonView({View.Short.class, View.All.class})
 	private Integer id = null;
+	@JsonView({View.Short.class, View.All.class})
 	private String name;
+	@JsonView({View.All.class})
 	private LocalDateTime registrationDateTime = null;
-	private List<Game> games = new ArrayList<Game>();
+
 	// DTO specific fields
-	private double successrate;
+	@JsonView({View.Short.class, View.All.class})
+	private double successrate=-1.0;
+	@JsonView({View.All.class})
 	private boolean anonymous=true;
 	
 	
@@ -59,16 +63,6 @@ public class PlayerDTO {
 	public void setAnonymous(boolean anonymous) {
 		this.anonymous = anonymous;
 	}
-	
-	
-	
-	public List<Game> getGames() {
-		return games;
-	}
-	public void setGames(List<Game> games) {
-		this.games = games;
-	}
-	
 	
 	@Override
 	public int hashCode() {
