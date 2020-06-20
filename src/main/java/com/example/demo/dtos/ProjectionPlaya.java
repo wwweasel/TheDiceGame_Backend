@@ -1,12 +1,12 @@
 package com.example.demo.dtos;
 
 import com.example.demo.entities.Player;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 public interface ProjectionPlaya {
-    PlayA getP();
+    Integer getId();
+    String getName();
+
     Double getSuccessrate();
 
-    interface PlayA{
-        Integer getId();
-    }
 }

@@ -5,13 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.demo.dtos.ProjectionPlaya;
-import com.example.demo.dtos.ProjectionPlayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dtos.PlayerDTO;
-import com.example.demo.entities.AnonymousPlayer;
-import com.example.demo.entities.KnownPlayer;
 import com.example.demo.entities.Player;
 import com.example.demo.repos.GameRepository;
 import com.example.demo.repos.PlayerRepository;
@@ -47,7 +44,7 @@ public class PlayerService {
 		return convertToDTO( playerRepo.save( convertToPlayer( dto ) ) );
 	}
 
-	// So far only modifies the name of the Player
+	// So far, only modifies the name of the Player
 	public PlayerDTO modifiy(PlayerDTO dto){
 		Optional<? extends Player> playerO = playerRepo.findById(dto.getId());
 
@@ -74,38 +71,27 @@ public class PlayerService {
 		}
 	}
 
-//	public List<PlayerDTO> findLoser(){
-//		return playerRepo.findLoser()
-//				.stream()
-//				.map( player -> convertToDTO(player))
-//				.collect(Collectors.toList());
-//	}
-	public List<ProjectionPlaya> findLoser(){
-		return playerRepo.findLoser();
+	public List<ProjectionPlaya> findLoser( int limit ){
+		return playerRepo.findLoser( limit );
 	}
 
-	public List<ProjectionPlayer> findTestLoser(){
-		return playerRepo.findTestLoser();
+	public List<ProjectionPlaya> findWinner( int limit ){
+		return  playerRepo.findWinner( limit );
 	}
-
 	
 	public PlayerDTO convertToDTO(Player player) {
 		PlayerDTO dto = new PlayerDTO();
 		dto.setId(player.getId());
 		dto.setName(player.getName());
 		dto.setRegistrationDateTime(player.getRegistrationDateTime());
-		if(dto.getName() != "Anonymous")
-			dto.setAnonymous(false);
 		return dto;
 	}
 	
 	public Player convertToPlayer(PlayerDTO dto) {
-		Player player;
-		if(dto.isAnonymous()) {
-			player = new AnonymousPlayer();
-		}else {
-			player = new KnownPlayer(dto.getName());
-		}
+		Player player = new Player();
+		player.setId( dto.getId() );
+		if(dto.getName()!=null)
+			player.setName(dto.getName()); // If theres no name it will be 'Anonymous' automatically
 		// registrationDateTime will care for itself automatically
 		return player;
 	}

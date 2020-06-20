@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -35,9 +36,14 @@ public class GameService {
 	// ------
 	public GameDTO play(Integer playerId) {
 		GameDTO dto = new GameDTO();
-		dto.setPlayerId(playerId);
-		dto.setResult(getRandomNumber(1,6)+getRandomNumber(1,6));
-		dto.setSuccess( dto.getResult() == 7 );
+		Optional<? extends Player> playerO = playerRepo.findById(playerId);
+		playerO.ifPresentOrElse( player -> {
+			dto.setPlayerId(playerId);
+			dto.setResult(getRandomNumber(1,6)+getRandomNumber(1,6));
+			dto.setSuccess( dto.getResult() == 7 );
+		}, () -> {
+			throw new RuntimeException("Player does not exist!");
+		});
 		return save(dto);
 	}
 	

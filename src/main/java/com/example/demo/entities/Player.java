@@ -10,8 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="player")
-@Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Player {
+public class Player {
 
 	// Fields
 	@Id
@@ -24,13 +23,12 @@ public abstract class Player {
 	
 	@Column(name = "registration_date_time", columnDefinition = "TIMESTAMP")
 	private LocalDateTime registrationDateTime;
+
+	@Column(name="name", columnDefinition="varchar(30) default 'Anonymous'", nullable = false)
+	private String name = "Anonymous";
 	
 	// Constructors
 	public Player() {}
-	
-	// abstract methods
-	public abstract String getName();
-	public abstract void setName(String name);
 
 	// special methods
 	@PrePersist
@@ -56,7 +54,15 @@ public abstract class Player {
 	public List<Game> getGames() {
 		return this.games;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

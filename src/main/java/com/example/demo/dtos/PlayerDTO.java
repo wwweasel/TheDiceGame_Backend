@@ -16,19 +16,16 @@ public class PlayerDTO {
 
 	// DTO specific fields
 	@JsonView({View.Short.class, View.All.class})
-	private double successrate=-1.0;
-	@JsonView({View.All.class})
-	private boolean anonymous=true;
+	private String successrate="not available";
 	
 	
 	// Constructors
 	public PlayerDTO() {}
-	public PlayerDTO(Integer id, String name, LocalDateTime registrationDateTime, double successrate, boolean anonymous) {
+	public PlayerDTO(Integer id, String name, LocalDateTime registrationDateTime, String successrate, boolean anonymous) {
 		this.id = id;
 		this.name = name;
 		this.registrationDateTime = registrationDateTime;
 		this.successrate = successrate;
-		this.anonymous = anonymous;
 	}
 	
 	//Getters and Setters
@@ -51,17 +48,11 @@ public class PlayerDTO {
 		this.registrationDateTime = registrationDateTime;
 	}
 	
-	public double getSuccessrate() {
+	public String getSuccessrate() {
 		return successrate;
 	}
-	public void setSuccessrate(double successrate) {
+	public void setSuccessrate(String successrate) {
 		this.successrate = successrate;
-	}
-	public boolean isAnonymous() {
-		return anonymous;
-	}
-	public void setAnonymous(boolean anonymous) {
-		this.anonymous = anonymous;
 	}
 	
 	@Override
