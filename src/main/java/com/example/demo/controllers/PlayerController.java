@@ -61,9 +61,9 @@ public class PlayerController {
 	}
 
 	@RequestMapping(method=RequestMethod.DELETE,value={"/players/{playerId}"})
-	public ResponseEntity<String> deletePlayer(@PathVariable Integer playerId) {
+	public Integer deletePlayer(@PathVariable Integer playerId) {
 		playerService.deletePlayer(playerId);
-		return new ResponseEntity<String>("Deleted Player with id: " + playerId + " as well as all of his Games.", HttpStatus.OK);
+		return playerId;
 	}
 
 	// ranking ///////

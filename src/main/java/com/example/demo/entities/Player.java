@@ -24,8 +24,8 @@ public class Player {
 	@Column(name = "registration_date_time", columnDefinition = "TIMESTAMP")
 	private LocalDateTime registrationDateTime;
 
-	@Column(name="name", columnDefinition="varchar(30) default 'Anonymous'", nullable = false)
-	private String name = "Anonymous";
+	@Column(name="name", columnDefinition="varchar(30) default 'Anonymous'", unique=true)
+	private String name = null;
 	
 	// Constructors
 	public Player() {}
