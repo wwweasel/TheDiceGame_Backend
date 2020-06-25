@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public class PlayerService {
 		.stream()
 		.forEach(dto -> {
 			if(gameRepo.calculateSuccessRate(dto.getId()).isPresent()){
-				dto.setSuccessrate(gameRepo.calculateSuccessRate(dto.getId()).get());
+				dto.setSuccessrate( String.format("%.2f", gameRepo.calculateSuccessRate(dto.getId()).get() ) );
 			}
 		});
 
@@ -65,7 +67,8 @@ public class PlayerService {
 	public Double ranking(){
 		Optional<Double> successrateAllO = gameRepo.calculateSuccessRateAll();
 		if(successrateAllO.isPresent()){
-			return successrateAllO.get();
+			BigDecimal result = new BigDecimal( successrateAllO.get() ).setScale(2, RoundingMode.HALF_UP);
+			return result.doubleValue();
 		}else {
 			throw new RuntimeException("No Games, no ranking.");
 		}

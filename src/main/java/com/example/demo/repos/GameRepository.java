@@ -23,7 +23,7 @@ public interface GameRepository extends JpaRepository<Game, Integer>{
 	@Query(value = "SELECT COUNT(g.success) * 100.0 / ( SELECT COUNT(g.success) FROM game g WHERE g.player_id = :playerId ) " +
 					"FROM game g " +
 					"WHERE g.player_id = :playerId and g.success = true", nativeQuery=true)
-	Optional<String> calculateSuccessRate(Integer playerId);
+	Optional<Double> calculateSuccessRate(Integer playerId);
 
 	@Query(value = "SELECT COUNT(g.success) * 100.0 / ( SELECT COUNT(g.id) FROM game g ) FROM game g WHERE g.success = true", nativeQuery=true)
 	Optional<Double> calculateSuccessRateAll();
