@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 import com.example.demo.dtos.ProjectionPlaya;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,8 +75,8 @@ public class PlayerService {
 		}
 	}
 
-	public List<ProjectionPlaya> findLoser( int limit ){
-		return playerRepo.findLoser( limit );
+	public List<ProjectionPlaya> findLoser(int limit ){
+		return playerRepo.findLoser(limit);
 	}
 
 	public List<ProjectionPlaya> findWinner( int limit ){
